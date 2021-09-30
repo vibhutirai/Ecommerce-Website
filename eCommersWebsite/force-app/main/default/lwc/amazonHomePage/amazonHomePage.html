@@ -1,0 +1,44 @@
+<template>
+    <div class="slds-grid slds-gutters" style="background-color: black;">
+        <img src={logo} style="height: 3% ; width:5%;">
+        <h1 style="margin-top: 1%; margin-left: 35%; font-size: Large; color :white;">Ecommerce Store - Amazon</h1><c-profile-Page style="color: White; font-size: Large; margin-top: 1%; margin-left: 32%;"></c-profile-Page>
+    </div>
+    <div class="slds-grid slds-gutters" style="background-color: black;">
+        <lightning-input type="text"  class="slds-col slds-size_5-of-12" style=" margin-top: 1.5%; margin-bottom: 1% ; margin-left: 5%;"
+        value={strSearchProdName}
+        onchange={handleSearch} placeholder="Search Product"> 
+        </lightning-input>
+        <select class="slds-select slds-grid" name = "optionSelect" onchange={handlesorting} style="margin-top: 2.9%; margin-bottom: 1%; margin-right: 1% ;">
+            <option value="">Select Price for sorting...</option>
+            <option value="Low" >High to Low</option>
+            <option value="High" >Low to High</option>
+        </select> 
+    </div>
+    <div id="HomePage" style="background-color: rgb(245, 240, 240);" class="slds-gutters">
+        <div  if:true={searchData} class="slds-grid slds-gutters slds-col" style="background-color: rgb(245, 240, 240);">
+            <template for:each={searchData} for:item="search">
+                <p key={search.Id}>
+                <img src={search.Display_Image__c} style="margin-left: 15% ;margin-top: 5%;  height: 40% ; width: 70%;"/>
+                <lightning-badge label={search.Name} style="margin-left: 15%; background-color: white; width : 70%; font-size: medium; text-align: center;"></lightning-badge>
+                <lightning-badge label={search.Price__c} style="margin-left: 15%; background-color: white; width : 70%; font-size: medium; text-align: center;"></lightning-badge>
+                <lightning-badge label={search.Description} style="margin-left: 15%; background-color: white; width : 70%; font-size: medium; text-align: center;"></lightning-badge>
+                <button style="margin-left: 14%;  margin-bottom: 1%; width : 70%;" onclick={handleAddToCart} class="slds-button slds-button_neutral">Add To Cart</button>
+                </p>
+            </template>
+        </div>
+ 
+        <div if:false={searchData} if:true={visibleData} class="slds-grid slds-gutters slds-col" style="background-color: rgb(245, 240, 240);">
+            <template for:each={visibleData} for:item="visible">
+                <p key={visible.Id}>
+                <img src={visible.Display_Image__c} style="margin-left: 15% ;margin-top: 5%;  height: 40% ; width: 70%;"/>
+                <lightning-badge label={visible.Name} style="margin-left: 15%; background-color: white; width : 70%; font-size: medium; text-align: center;"></lightning-badge>
+                <lightning-badge label={visible.Price__c} style="margin-left: 15%; background-color: white; width : 70%; font-size: medium; text-align: center;"></lightning-badge>
+                <lightning-badge label={visible.Description} style="margin-left: 15%; background-color: white; width : 70%; font-size: medium; text-align: center;"></lightning-badge>
+                <button style="margin-left: 14%;  margin-bottom: 1%; width : 70%;" onclick={handleAddToCart} class="slds-button slds-button_neutral">Add To Cart</button>
+                </p>
+            </template>
+        </div>
+        <button style="margin-left: 60%;  margin-bottom: 3%; width : 30%;" onclick={handleGoToCart} class="slds-button slds-button_neutral">Go To Cart</button>
+            <c-pagination records={product.data} onupdate={updateHandler}></c-pagination>
+    </div>
+</template>
